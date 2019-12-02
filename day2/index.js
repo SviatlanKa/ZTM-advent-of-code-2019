@@ -7,21 +7,42 @@ const input = [
     2,14,0,0
 ];
 
-function restoreProgram(arr) {
-    let analizingArr = [...arr];
-    analizingArr[1] = 12;
-    analizingArr[2] = 2;
-    let idx = 0;
-    while (analizingArr[idx] !== 99) {
-        const firstPos = analizingArr[idx + 1];
-        const secondPos = analizingArr[idx + 2];
-        const thirdPos = analizingArr[idx + 3];
-        analizingArr[thirdPos] = analizingArr[idx] === 1
-            ? analizingArr[firstPos] + analizingArr[secondPos]
-            : analizingArr[firstPos] * analizingArr[secondPos];
-        idx += 4;
+//Part One
+
+function restoreProgram(inputData, param1, param2) {
+    let intCodeInput = [...inputData];
+    intCodeInput[1] = param1;
+    intCodeInput[2] = param2;
+    let optCode = 0;
+
+    while (intCodeInput[optCode] !== 99) {
+        const firstInputPos = intCodeInput[optCode + 1];
+        const secondInputPos = intCodeInput[optCode + 2];
+        const outputPos = intCodeInput[optCode + 3];
+
+        intCodeInput[outputPos] = intCodeInput[optCode] === 1
+            ? intCodeInput[firstInputPos] + intCodeInput[secondInputPos]
+            : intCodeInput[optCode] === 2
+                ? intCodeInput[firstInputPos] * intCodeInput[secondInputPos]
+                : intCodeInput[outputPos];
+        optCode += 4;
     }
-    return analizingArr;
+    return intCodeInput[0];
 };
 
-console.log(restoreProgram(input)[0]);
+console.log(restoreProgram(input, 12, 2));
+
+//Part Two
+
+function findNounVerb(inputData, output) {
+    let intCodeInput = [...inputData];
+    for (let noun = 0; noun < 100; noun++) {
+        for (let verb = 0; verb < 100; verb++){
+            if (output === restoreProgram(intCodeInput, noun, verb)) {
+                return noun * 100 + verb;
+            }
+        }
+    }
+};
+
+console.log(findNounVerb(input, 19690720));
