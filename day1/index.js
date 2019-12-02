@@ -101,5 +101,6 @@ const DATA = `145963
 
 const totalFuel = DATA
                     .split('\n')
-                    .map(mass => Math.floor(mass / 3) - 2);
+                    .map(mass => Math.floor(mass / 3) - 2)
+                    .reduce((acc, mass) => (acc + mass), 0);
 console.log(totalFuel);
