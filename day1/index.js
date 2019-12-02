@@ -99,8 +99,19 @@ const DATA = `145963
 122700
 96657`;
 
+const fuelCalculate = value => (Math.floor(value / 3) - 2);
+
 const totalFuel = DATA
                     .split('\n')
-                    .map(mass => Math.floor(mass / 3) - 2)
+                    .map(mass => {
+                        let totalFuelForModule = fuelCalculate(mass);
+                        let fuelCounter = totalFuelForModule;
+
+                        while (fuelCalculate(fuelCounter) > 0) {
+                            fuelCounter = fuelCalculate(fuelCounter);
+                            totalFuelForModule += fuelCounter;
+                        }
+                       return totalFuelForModule;
+                    })
                     .reduce((acc, mass) => (acc + mass), 0);
 console.log(totalFuel);
