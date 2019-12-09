@@ -8,6 +8,25 @@ const input = [
 ];
 
 //Part One
+// function restoreProgram(arr) {
+//     let analizingArr = [...arr];
+//     analizingArr[1] = 12;
+//     analizingArr[2] = 2;
+//     let idx = 0;
+//     while (analizingArr[idx] !== 99) {
+//         const firstPos = analizingArr[idx + 1];
+//         const secondPos = analizingArr[idx + 2];
+//         const thirdPos = analizingArr[idx + 3];
+//         analizingArr[thirdPos] = analizingArr[idx] === 1
+//             ? analizingArr[firstPos] + analizingArr[secondPos]
+//             : analizingArr[firstPos] * analizingArr[secondPos];
+//         idx += 4;
+//     }
+//     return intCodeInput[0];
+//   };
+
+
+//Modificated Part One
 
 function restoreProgram(inputData, param1, param2) {
     let intCodeInput = [...inputData];
