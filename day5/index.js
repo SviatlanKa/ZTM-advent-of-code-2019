@@ -42,8 +42,6 @@ const input_data = [
     224,102,2,223,223,1006,224,674,1001,223,1,223,4,223,99,226
 ];
 
-const id = 1;
-
 const getInstruction = (optCode) => {
     const optCodeArr = [0, 0, 0, 0];
     if (optCode < 100) {
@@ -56,7 +54,6 @@ const getInstruction = (optCode) => {
         for (let i = 2; i < optCodeAsDigits.length; i++) {
             optCodeArr[i - 1] = Number(optCodeAsDigits[i]);
         }
-        //console.log(optCodeArr)
         return optCodeArr;
     }
 };
@@ -79,19 +76,16 @@ function diagnoseProgram(diagnosticProgram, id) {
                 optCode[3] === 0 ? inputData[inputData[optCodePos + 3]] = param1 + param2
                     : inputData[optCodePos + 3] = param1 + param2;
                 optCodePos += 4;
-                // console.log(`from 1: ${optCodePos}`)
                 break;
             case 2:
                 optCode[3] === 0 ? inputData[inputData[optCodePos + 3]] = param1 * param2
                     : inputData[optCodePos + 3] = param1 * param2;
                 optCodePos += 4;
-                // console.log(`from 2: ${optCodePos}`)
                 break;
             case 3:
                 optCode[1] === 0 ? inputData[inputData[optCodePos + 1]] = input
                     : inputData[optCodePos + 1] = input;
                 optCodePos += 2;
-                // console.log(`from 3: ${optCodePos}`)
                 break;
             case 4:
                 if (param1 > 0) {
@@ -99,15 +93,41 @@ function diagnoseProgram(diagnosticProgram, id) {
                 }
                 optCodePos += 2;
                 break;
+            case 5:
+                optCodePos = param1 !== 0 ? optCodePos = param2 : optCodePos + 3;
+                break;
+            case 6:
+                optCodePos = param1 === 0 ? optCodePos = param2 : optCodePos + 3;
+                break;
+            case 7:
+                if (optCode[3] === 0) {
+                    param1 < param2 ? inputData[inputData[optCodePos + 3]] = 1
+                        : inputData[inputData[optCodePos + 3]] = 0;
+                } else {
+                    param1 < param2 ? inputData[optCodePos + 3] = 1
+                        : inputData[optCodePos + 3] = 0;
+                }
+                optCodePos += 4;
+                break;
+            case 8:
+                if (optCode[3] === 0) {
+                    param1 === param2 ? inputData[inputData[optCodePos + 3]] = 1
+                        : inputData[inputData[optCodePos + 3]] = 0;
+                } else {
+                    param1 === param2 ? inputData[optCodePos + 3] = 1
+                        : inputData[optCodePos + 3] = 0;
+                }
+                optCodePos += 4;
+                break;
+            case 9:
             default:
                 console.log('Wrong OptCode!', optCodePos);
                 break;
-
         }
     }
     return output;
 }
 
-console.log('Output', diagnoseProgram(input_data, id));
+console.log('Output', diagnoseProgram(input_data, 5));
 
 
